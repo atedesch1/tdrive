@@ -9,11 +9,19 @@ import (
 var homeChoices = []string{"Navigate", "Configure", "Quit"}
 
 type HomeModel struct {
+	state *State
+
 	cursor int
 }
 
 func (m HomeModel) String() string {
 	return "HomeModel"
+}
+
+func NewHomeModel(state *State) HomeModel {
+	model := HomeModel{state: state}
+	model.state.SetCurrentModel(model.String())
+	return model
 }
 
 func (m HomeModel) Init() tea.Cmd {
@@ -37,9 +45,11 @@ func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			switch homeChoices[m.cursor] {
 			case "Navigate":
-				return NavModel{}, nil
+				model := NewNavModel(m.state)
+				return model, model.Init()
 			case "Configure":
-				return ConfigModel{}, nil
+				model := NewConfigModel(m.state)
+				return model, model.Init()
 			case "Quit":
 				return m, tea.Quit
 			}

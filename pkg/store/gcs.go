@@ -7,9 +7,8 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-
 type GCSStorage struct {
-	client *storage.Client
+	client     *storage.Client
 	bucketName string
 }
 
@@ -25,9 +24,17 @@ func (s *GCSStorage) Close() error {
 	return s.client.Close()
 }
 
-func (s *GCSStorage) ListObjects() ([]string, error) {
+func (s *GCSStorage) ListObjects(prefix string) ([]string, error) {
 	var objects []string
-	it := s.client.Bucket(s.bucketName).Objects(context.Background(), nil)
+	it := s.client.
+		Bucket(s.bucketName).
+		Objects(
+			context.Background(),
+			&storage.Query{
+				// Prefix:    prefix,
+				// Delimiter: "/",
+			},
+		)
 	for {
 		obj, err := it.Next()
 		if err == iterator.Done {
