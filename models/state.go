@@ -17,7 +17,8 @@ func NewState(store store.Store) *State {
 }
 
 func (s *State) InitialModel() tea.Model {
-	return NewHomeModel(s)
+	// return NewHomeModel(s)
+	return NewNavModel(s)
 }
 
 func (s *State) SetCurrentModel(model string) {
