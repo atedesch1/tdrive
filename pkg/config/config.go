@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	configName = ".odriveconfig"
+	configName = ".tdriveconfig"
 	configType = "yaml"
 
 	GCSStorageProvider StorageProvider = "GCS"
@@ -34,7 +34,7 @@ type GCSStorageConfig struct {
 }
 
 func GetConfigPath() string {
-	configDir, ok := os.LookupEnv("ODRIVE_CONFIG_DIR")
+	configDir, ok := os.LookupEnv("TDRIVE_CONFIG_DIR")
 	if !ok {
 		configDir = os.Getenv("HOME")
 	}

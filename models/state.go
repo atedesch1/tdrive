@@ -3,8 +3,8 @@ package models
 import (
 	"log"
 
-	"github.com/atedesch1/odrive/pkg/config"
-	"github.com/atedesch1/odrive/pkg/store"
+	"github.com/atedesch1/tdrive/pkg/config"
+	"github.com/atedesch1/tdrive/pkg/store"
 	tea "github.com/charmbracelet/bubbletea"
 )
 

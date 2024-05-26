@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/atedesch1/odrive/pkg/config"
+	"github.com/atedesch1/tdrive/pkg/config"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 )

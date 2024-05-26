@@ -1,4 +1,4 @@
-module github.com/atedesch1/odrive
+module github.com/atedesch1/tdrive
 
 go 1.22.3
 

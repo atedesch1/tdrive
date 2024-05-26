@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/atedesch1/odrive/models"
-	"github.com/atedesch1/odrive/pkg/config"
+	"github.com/atedesch1/tdrive/models"
+	"github.com/atedesch1/tdrive/pkg/config"
 	tea "github.com/charmbracelet/bubbletea"
 )
 

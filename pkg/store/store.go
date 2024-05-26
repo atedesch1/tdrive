@@ -3,7 +3,7 @@ package store
 import (
 	"fmt"
 
-	"github.com/atedesch1/odrive/pkg/config"
+	"github.com/atedesch1/tdrive/pkg/config"
 )
 
 type Store interface {
