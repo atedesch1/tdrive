@@ -10,7 +10,7 @@ const (
 	configName = ".tdriveconfig"
 	configType = "yaml"
 
-	GCSStorageProvider StorageProvider = "GCS"
+	GCSStorageProvider StorageProvider = "gcs"
 	// S3StorageProvider    StorageProvider = "s3"
 	// LocalStorageProvider StorageProvider = "local"
 )

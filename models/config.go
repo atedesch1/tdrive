@@ -181,7 +181,16 @@ func (m storageProviderStepModel) View() string {
 		if m.cursor == i {
 			cursor = ">"
 		}
-		s += fmt.Sprintf("%s %s\n", cursor, choice)
+
+		var provider string
+		switch choice {
+		case config.GCSStorageProvider:
+			provider = "Google Cloud Storage"
+		default:
+			log.Fatalf("unsupported storage provider %s", choice)
+		}
+
+		s += fmt.Sprintf("%s %s\n", cursor, provider)
 	}
 
 	s += "\nPress q to quit.\n"
