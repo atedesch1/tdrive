@@ -63,6 +63,12 @@ func (m NavModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m = m.GoUpADirectory()
 				return m, m.ListObjects
 			}
+		case "~":
+			// Go to root directory
+			if m.currentPath != "" {
+				m.currentPath = ""
+				return m, m.ListObjects
+			}
 		case "enter":
 			switch m.cursor {
 			case UpDirectoryIndex:
@@ -162,7 +168,7 @@ type downloadObjectMsg struct {
 
 func (m NavModel) GetDownloadObjectCmd(objectPath string) func() tea.Msg {
 	return func() tea.Msg {
-		err := m.state.store.DownloadObject(objectPath, "")
+		err := m.state.store.DownloadObject(objectPath, m.state.config.DownloadPath)
 		if err != nil {
 			return downloadObjectMsg{err: err}
 		}

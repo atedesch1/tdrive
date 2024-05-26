@@ -1,6 +1,24 @@
 package store
 
+import (
+	"fmt"
+
+	"github.com/atedesch1/odrive/pkg/config"
+)
+
 type Store interface {
-	ListObjects(string) ([]string, error)
-	DownloadObject(string, string) error
+	ListObjects(prefix string) ([]string, error)
+	DownloadObject(objectPath string, targetDir string) error
+}
+
+func NewStore(cfg *config.Config) (Store, error) {
+	switch cfg.StorageProvider {
+	case config.GCSStorageProvider:
+		if cfg.StorageConfig.GCSStorageConfig == nil {
+			return nil, fmt.Errorf("missing GCS storage config")
+		}
+		return NewGCSStorage(cfg.StorageConfig.GCSStorageConfig.BucketName)
+	default:
+		return nil, fmt.Errorf("unsupported storage provider")
+	}
 }

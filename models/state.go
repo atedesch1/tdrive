@@ -1,24 +1,49 @@
 package models
 
 import (
+	"log"
+
+	"github.com/atedesch1/odrive/pkg/config"
 	"github.com/atedesch1/odrive/pkg/store"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 type State struct {
 	currentModel string
+	config       *config.Config
 	store        store.Store
 }
 
-func NewState(store store.Store) *State {
+func NewState(cfg *config.Config) *State {
+	if cfg == nil {
+		// Start in configuration mode
+		return &State{
+			currentModel: ConfigModel{}.String(),
+		}
+	}
+
+	store, err := store.NewStore(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return &State{
-		store: store,
+		currentModel: HomeModel{}.String(),
+		config:       cfg,
+		store:        store,
 	}
 }
 
 func (s *State) InitialModel() tea.Model {
-	// return NewHomeModel(s)
-	return NewNavModel(s)
+	switch s.currentModel {
+	case ConfigModel{}.String():
+		return NewConfigModel(s)
+	case HomeModel{}.String():
+		return NewHomeModel(s)
+	default:
+		log.Fatalf("initial model cannot be model %s", s.currentModel)
+		return nil
+	}
 }
 
 func (s *State) SetCurrentModel(model string) {
