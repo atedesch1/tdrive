@@ -47,8 +47,11 @@ func (m NavModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "ctrl+c", "q":
+		case "ctrl+c":
 			return m, tea.Quit
+		case "esc", "q":
+			model := NewHomeModel(m.state)
+			return model, model.Init()
 		case "up", "k":
 			if m.cursor > 0 {
 				m.cursor--
@@ -115,7 +118,7 @@ func (m NavModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m NavModel) View() string {
-	s := "File system:\n"
+	s := fmt.Sprintf("Storage Provider: %s\n", m.state.config.StorageProvider)
 	s += fmt.Sprintf("Current path: /%s\n\n", m.currentPath)
 
 	for i := range m.listSize {
@@ -134,7 +137,7 @@ func (m NavModel) View() string {
 		s += fmt.Sprintf("%s %s\n", cursor, path)
 	}
 
-	s += "\nPress q to quit.\n"
+	s += "\nPress ESC or Q to back home.\n"
 	return s
 }
 
